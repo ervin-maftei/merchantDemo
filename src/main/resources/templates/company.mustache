@@ -1,0 +1,15 @@
+{{> header}}
+
+<h1>{{title}}</h1>
+<div class="projects">
+
+    {{#project}}
+        <section>
+            <header class="project-header">
+                <div class="project-meta">Project <strong>{{project.name}}</strong>, on industry <strong> {{project.industry}}</strong></div>
+            </header>
+        </section>
+    {{/project}}
+</div>
+
+{{> footer}}
