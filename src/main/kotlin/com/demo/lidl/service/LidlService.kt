@@ -10,12 +10,24 @@ class LidlService(
     @Autowired private val containerRepository: ContainerRepository,
     @Autowired private val containerEventRepository: ContainerEventRepository
 ) {
+
+    fun createDrivers(drivers: List<Driver>) {
+        driverRepository.saveAll(drivers)
+    }
+
     fun getDrivers(): List<Driver> {
         return driverRepository.findAll().iterator().asSequence().toList()
     }
 
+    fun createContainers(containers: List<Container>) {
+        containerRepository.saveAll(containers)
+    }
     fun getContainers(): List<Container> {
         return containerRepository.findAll().iterator().asSequence().toList()
+    }
+
+    fun createContainerEvents(containerEvents: List<ContainerEvent>) {
+        containerEventRepository.saveAll(containerEvents)
     }
 
     fun getContainerEvents(): List<ContainerEvent> {
