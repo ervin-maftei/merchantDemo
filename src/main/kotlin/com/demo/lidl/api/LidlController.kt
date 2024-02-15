@@ -46,3 +46,13 @@ class LidlReadController(@Autowired val lidlService: LidlService) {
         return lidlService.getContainerEvents()
     }
 }
+
+@RestController
+@RequestMapping("/update")
+class LidlUpdateController(@Autowired val lidlService: LidlService) {
+
+    @PatchMapping("/containerEvent/{id}")
+    fun patchContainerEvent(@PathVariable id: Long, @RequestBody driver:Driver) {
+        lidlService.updateContainerEventDriverById(id, driver)
+    }
+}

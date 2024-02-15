@@ -1,20 +1,31 @@
 package com.demo.lidl.repository
 
-import com.example.demo.domain.Discipline
-import com.example.demo.domain.Grade
-import com.example.demo.repository.Person
+import jakarta.transaction.Transactional
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
+import org.springframework.data.jpa.repository.Query
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.query.Param
 
 @EnableJpaRepositories
-interface ContainerRepository : CrudRepository<Container, Long> {
+interface ContainerRepository : JpaRepository<Container, Long> {
     //fun updateContainerById(containerId: Long): Container
     fun getContainerById(containerId: Long): Container
 }
 
 @EnableJpaRepositories
-interface ContainerEventRepository : CrudRepository<ContainerEvent, Long> {
-    //fun updateContainerEventById(containerEventId: Long): ContainerEvent
+interface ContainerEventRepository : JpaRepository<ContainerEvent, Long> {
+    @Modifying(flushAutomatically = true)
+    @Transactional
+    @Query(
+        value = "update ContainerEvent ce set ce.driver = :driver where ce.id = :containerEventId"
+    )
+    fun updateContainerEventDriverById(
+        @Param("containerEventId") containerEventId: Long,
+        @Param("driver") driver: Driver
+    ): Int
+
     fun getContainerEventById(containerEventId: Long): ContainerEvent
     fun getContainerEventsByPickStatus(pickStatus: PickStatus): List<ContainerEvent>
 }

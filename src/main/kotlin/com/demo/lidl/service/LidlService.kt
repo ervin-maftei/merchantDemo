@@ -33,4 +33,8 @@ class LidlService(
     fun getContainerEvents(): List<ContainerEvent> {
         return containerEventRepository.findAll().iterator().asSequence().toList()
     }
+
+    fun updateContainerEventDriverById(id: Long, driver: Driver) {
+        containerEventRepository.updateContainerEventDriverById(id, driver)
+    }
 }
