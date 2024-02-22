@@ -45,10 +45,10 @@ class LidlService(
         val containerDbObj = containerRepository.getContainerById(containerId)
         containerRepository.save(
             containerDbObj.copy(
-                quantity = container.quantity,
-                weight = container.weight,
-                height = container.height,
-                damageStatus = container.damageStatus
+                quantity = container.quantity?: containerDbObj.quantity,
+                weight = container.weight?: containerDbObj.weight,
+                height = container.height?: containerDbObj.weight,
+                damageStatus = container.damageStatus?: containerDbObj.damageStatus
             )
         )
     }
@@ -68,13 +68,13 @@ class LidlService(
         val containerEventDbObj = containerEventRepository.findById(id).get()
         containerEventRepository.save(
             containerEventDbObj.copy(
-                pickStatus = containerEvent.pickStatus,
-                deliveryStatus = containerEvent.deliveryStatus,
-                gasFreeMeasure = containerEvent.gasFreeMeasure,
-                pin = containerEvent.pin,
-                priority = containerEvent.priority,
-                driver = containerEvent.driver,
-                container = containerEvent.container
+                pickStatus = containerEvent.pickStatus?: containerEventDbObj.pickStatus,
+                deliveryStatus = containerEvent.deliveryStatus?: containerEventDbObj.deliveryStatus,
+                gasFreeMeasure = containerEvent.gasFreeMeasure?: containerEventDbObj.gasFreeMeasure,
+                pin = containerEvent.pin?: containerEventDbObj.pin,
+                priority = containerEvent.priority?: containerEventDbObj.priority,
+                driver = containerEvent.driver?: containerEventDbObj.driver,
+                container = containerRepository.findById(containerEvent.container?.id?: 0).orElse(containerEventDbObj.container)
             )
         )
     }

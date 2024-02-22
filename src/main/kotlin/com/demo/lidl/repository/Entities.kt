@@ -1,42 +1,33 @@
 package com.demo.lidl.repository
 
-import com.demo.lidl.repository.DamageStatus.MINT
-import com.demo.lidl.repository.DeliveryStatus.WAITING
-import com.demo.lidl.repository.Priority.P2
 import jakarta.persistence.*
 
 
 @Entity
 data class Container(
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) var id: Long? = 0,
-    var quantity: Long = 0,
-    var weight: Long = 4,
-    var height: Long = 4,
-    var damageStatus: DamageStatus = MINT,
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) var id: Long? = null,
+    var quantity: Long? = null,
+    var weight: Long? = null,
+    var height: Long? = null,
+    var damageStatus: DamageStatus? = null
 )
 
 @Entity
 data class Driver(
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) var id: Long? = 0,
-    var name: String = "john doe"
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) var id: Long? = null,
+    var name: String? = null
 )
 
 @Entity
 data class ContainerEvent(
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) var id: Long? = 0,
-    var pickStatus: PickStatus = PickStatus.WAITING,
-    var deliveryStatus: DeliveryStatus = WAITING,
-    var gasFreeMeasure: Long = 0,
-    var pin: String = "1234",
-    var priority: Priority = P2,
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) var id: Long? = null,
+    var pickStatus: PickStatus? = null,
+    var deliveryStatus: DeliveryStatus? = null,
+    var gasFreeMeasure: Long? = null,
+    var pin: String? = null,
+    var priority: Priority? = null,
     @ManyToOne
-    var driver: Driver = Driver(0, "john doe"),
+    var driver: Driver? = null,
     @OneToOne
-    var container: Container = Container(
-        1,
-        100,
-        4,
-        5,
-        MINT
-    )
+    var container: Container? = null
 )
